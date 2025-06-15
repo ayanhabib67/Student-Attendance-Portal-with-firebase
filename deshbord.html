@@ -6,7 +6,6 @@
     <title>Student Portal | Attendance & Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
     <style>
         :root {
             --primary: #5e60ce;
@@ -375,26 +374,26 @@
         .sidebar {
             position: fixed;
             top: 0;
-            right: -300px; /* Changed from left to right */
+            right: -300px;
             width: 300px;
             height: 100%;
             background: var(--glass-bg);
             backdrop-filter: blur(15px);
             color: var(--light);
             padding: 2rem;
-            transition: right 0.4s ease; /* Changed from left to right */
+            transition: right 0.4s ease;
             z-index: 999;
-            box-shadow: -2px 0 20px rgba(0, 0, 0, 0.4); /* Adjusted shadow for right side */
+            box-shadow: -2px 0 20px rgba(0, 0, 0, 0.4);
         }
 
-        #toggle:checked + .menu-icon + .sidebar {
-            right: 0; /* Slide in from right */
+        #toggle:checked ~ .sidebar {
+            right: 0;
         }
 
         .menu-icon {
             position: fixed;
             top: 20px;
-            right: 20px; /* Changed from left to right */
+            right: 20px;
             font-size: 1.8rem;
             background: var(--glass-bg);
             color: var(--light);
@@ -437,8 +436,23 @@
 
         .sidebar ul li:hover {
             background: var(--primary);
-            transform: translateX(-8px); /* Reversed direction for right sidebar */
+            transform: translateX(-8px);
             box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 1.25rem;
+            }
+            
+            .student-info {
+                padding: 1.75rem;
+            }
+            
+            .attendance-form {
+                padding: 1.75rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -458,6 +472,7 @@
                 flex-direction: column;
                 text-align: center;
                 gap: 1.5rem;
+                padding: 1.5rem;
             }
 
             .student-photo {
@@ -476,6 +491,7 @@
 
             .btn-group {
                 flex-direction: column;
+                gap: 1rem;
             }
 
             .btn {
@@ -485,21 +501,32 @@
 
             .sidebar {
                 width: 250px;
-                right: -250px; /* Adjusted for smaller screens */
+                right: -250px;
             }
 
-            #toggle:checked + .menu-icon + .sidebar {
-                right: 0;
+            .menu-icon {
+                top: 15px;
+                right: 15px;
+                font-size: 1.5rem;
+                padding: 0.5rem 0.7rem;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
+            body {
+                padding: 0.75rem;
+            }
+            
+            .header {
+                padding: 0.75rem;
+            }
+            
             .page-title {
                 font-size: 1.8rem;
             }
 
             .student-info {
-                padding: 1.5rem;
+                padding: 1.25rem;
             }
 
             .student-photo {
@@ -515,6 +542,10 @@
                 font-size: 1.4rem;
             }
 
+            .attendance-form {
+                padding: 1.25rem;
+            }
+
             .form-control {
                 padding: 0.8rem;
                 font-size: 0.9rem;
@@ -524,55 +555,85 @@
                 padding: 0.8rem;
                 font-size: 0.9rem;
             }
+            
+            .sidebar {
+                width: 220px;
+                right: -220px;
+                padding: 1.5rem;
+            }
+            
+            .sidebar h2 {
+                font-size: 1.4rem;
+                margin-bottom: 1.25rem;
+            }
+            
+            .sidebar ul li {
+                padding: 0.7rem 0.9rem;
+                font-size: 1rem;
+            }
         }
-        .main-contant{
-            display: none;
-           
-            justify-content: center;
-        }
-        .spinner-border{
-            display: flex;
-            justify-content: center;
+
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 1.2rem;
+                gap: 0.5rem;
+            }
+            
+            .logo-icon {
+                font-size: 1.5rem;
+            }
+            
+            .user-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
+            }
+            
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .student-name {
+                font-size: 1.3rem;
+            }
+            
+            .student-id {
+                font-size: 0.9rem;
+            }
+            
+            .form-title {
+                font-size: 1.3rem;
+            }
+            
+            .form-description {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
-
-
-
-
-    <div   id="spinner" class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-
-
-
-
-
-<div id="content" class="main-contant">
-
-    
+    <input type="checkbox" id="toggle" style="display: none;">
     <header class="header">
         <div class="logo">
             <i class="fas fa-user-check logo-icon"></i>
             <span>Student Portal</span>
         </div>
         <div class="user-menu">
-            <div class="user-avatar" id="image">JS</div>
+            <div class="user-avatar">JS</div>
         </div>
-        <input type="checkbox" id="toggle">
         <label for="toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
-        <div class="sidebar">
-            <h2>Menu</h2>
-            <ul>
-                <li><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-                <li id="adminPage" ><i class="fas fa-user-shield"></i> Admin</li>
-                <li><i class="fas fa-envelope"></i> Messages</li>
-                <li id="card"><i class="fas fa-id-card"></i> ID Card</li>
-                <li   id="Logout-Btn"><i class="fas fa-sign-out-alt"></i> Logout</li>
-            </ul>
-        </div>
     </header>
+
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><i class="fas fa-tachometer-alt"></i> Dashboard</li>
+            <li id="adminPage"><i class="fas fa-user-shield"></i> Admin</li>
+            <li><i class="fas fa-envelope"></i> Messages</li>
+            <li id="card"><i class="fas fa-id-card"></i> ID Card</li>
+            <li  id="Logout-Btn"><i class="fas fa-sign-out-alt"></i> Logout</li>
+        </ul>
+    </div>
 
     <div class="container">
         <div class="page-header">
@@ -581,7 +642,7 @@
         
         <div class="student-info">
             <div class="student-photo" id="student-photo">
-                <img src="" alt="Student Photo">
+                <!-- <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student Photo"> -->
             </div>
             <div class="student-details">
                 <div class="student-name" id="studentName"></div>
@@ -598,11 +659,6 @@
                 </div>
             </div>
         </div>
-
-
-        
-        
-
 
         <div class="attendance-form">
             <div class="form-header">
@@ -626,25 +682,25 @@
                 </div>
                 <div class="form-group">
                     <label for="rollNumber" class="form-label">Roll Number</label>
-                    <input type="text" id="rollNumber" class="form-control" value="SMIT-12345" readonly aria-label="Roll Number"/>
+                    <input type="text" id="rollNumber" class="form-control" value="SMIT-2023-001" readonly aria-label="Roll Number"/>
                 </div>
                 <div class="form-group">
                     <label for="details" class="form-label">Additional Notes</label>
                     <textarea id="details" class="form-control" rows="4" placeholder="Any concerns about the class or environment?" aria-label="Additional Notes"></textarea>
                 </div>
                 <div class="btn-group">
-                    <button type="submit"  id="SubmitAttendance"  class="btn btn-primary">
+                    <button type="submit" id="SubmitAttendance"  class="btn btn-primary">
                         <i class="fas fa-paper-plane"></i> Submit Attendance
                     </button>
-                    <button type="button"   id="ViewAttendance"  class="btn btn-secondary">
+                    <button type="button"  id="ViewAttendance" class="btn btn-secondary">
                         <i class="fas fa-calendar-alt"></i> View Attendance
                     </button>
                 </div>
             <!-- </form> -->
         </div>
     </div>
-</div>
-    
+
+
     <script type="module" src="deshbord.js"></script>
 </body>
-</html>   
+</html>
