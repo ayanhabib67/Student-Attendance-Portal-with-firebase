@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5e60ce;
+            --primary-glow: #5e60ce80;
+            --secondary: #4ea8de;
+            --success: #00f5d4;
+            --danger: #f72585;
+            --dark: #0a0a23;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --light: #e0e0e0;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--dark), #1a1a3a, #2a2a4a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-primary);
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--primary-glow) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.2;
+            animation: dotsMove 30s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes dotsMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(20px, 20px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px var(--primary-glow);
+            margin-bottom: 2rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .control-group input {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(10, 10, 35, 0.5);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            width: 150px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-group input:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--primary-glow);
+            background: rgba(10, 10, 35, 0.8);
+        }
+
+        .control-group input::placeholder {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .control-button {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .control-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+            background: linear-gradient(45deg, var(--secondary), var(--success));
+        }
+
+        .control-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            opacity: 0;
+        }
+
+        .control-button:hover::before {
+            width: 200%;
+            height: 200%;
+            opacity: 1;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px var(--primary-glow);
+        }
+
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .card-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--light);
+            text-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        .card-content p {
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .card-footer {
+            padding: 0.8rem 1.2rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            text-align: right;
+        }
+
+        .card-footer button {
+            padding: 0.6rem 1rem;
+            background: var(--success);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-footer button:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--success);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .controls {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .control-group input {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .control-group label {
+                font-size: 0.9rem;
+            }
+
+            .control-group input,
+            .control-button {
+                padding: 0.7rem;
+                font-size: 0.85rem;
+            }
+
+            .card {
+                margin: 0 auto;
+            }
+
+            .card-content h3 {
+                font-size: 1rem;
+            }
+
+            .card-content p {
+                font-size: 0.85rem;
+            }
+
+            .card-footer button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="controls">
+            <button class="control-button" id="viewAttendence" aria-label="View attendance">View Attendance</button>
+            <div class="control-group">
+                <label for="academicYearSelect">Academic Year:</label>
+                <input type="text" id="academicYearSelect" placeholder="e.g. 2024-2025" aria-label="Academic year input">
+            </div>
+            <button class="control-button" id="AddYear" aria-label="Add academic year">Add Year</button>
+            <button   class="control-button"  aria-label="Add academic year"        id="Logout-Btn"> Logout</button>
+        </div>
+        <div class="card-container" id="card-content">
+           
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

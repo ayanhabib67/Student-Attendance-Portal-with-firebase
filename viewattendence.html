@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance Viewer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #5e60ce;
+      --primary-glow: #5e60ce80;
+      --secondary: #4ea8de;
+      --success: #00f5d4;
+      --danger: #f72585;
+      --dark: #0a0a23;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --light: #e0e0e0;
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0a0a0;
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--dark), #1a1a3a, #2a2a4a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-primary);
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, var(--primary-glow) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.2;
+      animation: dotsMove 30s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes dotsMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(20px, 20px); }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      animation: slideUp 0.8s ease-out;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), var(--success));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px var(--primary-glow);
+      margin-bottom: 1.5rem;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      position: relative;
+      min-width: 200px;
+    }
+
+    .filter-group select,
+    .filter-group input[type="date"] {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: none;
+      border-radius: 12px;
+      background: rgba(10, 10, 35, 0.5);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+      appearance: none;
+    }
+
+    .filter-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234ea8de' viewBox='0 0 16 16'%3E%3Cpath d='M8 12l-6-6h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 12px;
+      cursor: pointer;
+    }
+
+    .filter-group input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.7);
+      cursor: pointer;
+    }
+
+    .filter-group select:focus,
+    .filter-group input[type="date"]:focus {
+      outline: none;
+      box-shadow: 0 0 15px var(--primary-glow);
+      background: rgba(10, 10, 35, 0.8);
+    }
+
+    .filter-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px var(--primary-glow);
+      opacity: 0;
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .filter-group select:focus + .filter-glow,
+    .filter-group input[type="date"]:focus + .filter-glow {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--glass-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease;
+    }
+
+    th {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: var(--light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    tr:hover {
+      background: rgba(94, 96, 206, 0.1);
+      transform: scale(1.01);
+    }
+
+    .present {
+      color: var(--success);
+      font-weight: 600;
+      text-shadow: 0 0 5px var(--success);
+    }
+
+    .absent {
+      color: var(--danger);
+      font-weight: 600;
+      text-shadow: 0 0 5px var(--danger);
+    }
+
+    .late {
+      color: #fbbc05;
+      font-weight: 600;
+      text-shadow: 0 0 5px #fbbc05;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 2rem 1rem;
+        padding: 1.8rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .filters {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .filter-group {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      th, td {
+        padding: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .filter-group select,
+      .filter-group input[type="date"] {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Attendance Viewer</h1>
+
+    <!-- <div class="filters">
+      <div class="filter-group">
+        <select aria-label="Filter by Status">
+          <option value="">All Statuses</option>
+          <option value="present">Present</option>
+          <option value="absent">Absent</option>
+          <option value="late">Late</option>
+        </select>
+        <div class="filter-glow"></div>
+      </div>
+      <div class="filter-group">
+        <input type="date" aria-label="Filter by Date"/>
+        <div class="filter-glow"></div>
+      </div>
+    </div> -->
+
+    <table aria-label="Attendance Records">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script type="module" src="viewattendence.js"></script>
+</body>
+</html>

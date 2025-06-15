@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Attendance App - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6b48ff;
+      --primary-glow: #6b48ff80;
+      --secondary: #3ec1ff;
+      --accent: #ff2e63;
+      --dark: #0a0a23;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --light: #f0f0f0;
+      --success: #00ffcc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0a0a23, #1a1a3a, #2a2a4a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      padding: 1rem;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Subtle background dots animation */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(94, 96, 206, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.3;
+      animation: dotsMove 30s linear infinite;
+    }
+
+    @keyframes dotsMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(20px, 20px); }
+    }
+
+    .login-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 50px rgba(107, 72, 255, 0.3);
+      width: 100%;
+      max-width: 450px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: float 5s ease-in-out infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .login-container:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 70px rgba(107, 72, 255, 0.4);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .login-header h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), var(--success));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .login-header p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+      letter-spacing: 1.2px;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-group label {
+      color: var(--light);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      display: block;
+      letter-spacing: 1px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--secondary);
+      font-size: 1.1rem;
+      z-index: 1;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.9rem 0.9rem 0.9rem 45px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      background: rgba(10, 10, 35, 0.6);
+      color: var(--light);
+      font-size: 0.95rem;
+      transition: all 0.4s ease;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary-glow);
+      background: rgba(10, 10, 35, 0.8);
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 1px;
+    }
+
+    .input-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px var(--primary-glow);
+      opacity: 0;
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .form-group input:focus + .input-glow {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 15px var(--primary-glow);
+      transition: all 0.4s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px var(--primary-glow);
+      background: linear-gradient(45deg, var(--secondary), var(--success));
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+      opacity: 0;
+    }
+
+    .login-btn:hover::before {
+      width: 200%;
+      height: 200%;
+      opacity: 1;
+    }
+
+    .login-btn i {
+      transition: transform 0.4s ease;
+    }
+
+    .login-btn:hover i {
+      transform: translateX(6px);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.8rem 0;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .login-footer a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .login-footer a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--success);
+      transition: width 0.3s ease;
+    }
+
+    .login-footer a:hover::after {
+      width: 100%;
+    }
+
+    .login-footer a:hover {
+      color: var(--success);
+      transform: translateX(3px);
+    }
+
+    .login-footer a i {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.8rem;
+        margin: 0 1rem;
+        max-width: 100%;
+      }
+
+      .login-header h2 {
+        font-size: 1.8rem;
+      }
+
+      .login-header p {
+        font-size: 0.85rem;
+      }
+
+      .form-group input {
+        padding: 0.8rem 0.8rem 0.8rem 40px;
+        font-size: 0.9rem;
+      }
+
+      .input-icon {
+        font-size: 1rem;
+        left: 10px;
+      }
+
+      .login-btn {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .login-footer a {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <h2>Portal Access</h2>
+      <p>Sign in to your SMIT account</p>
+    </div>
+
+    <!-- <form> -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" id="email" name="email" placeholder="student@university.edu" required aria-label="Email Address"/>
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="password" name="password" placeholder="••••••••" required aria-label="Password"/>
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <button type="submit"  id="login-Btn"  class="login-btn">
+        <span>Authorize</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    <!-- </form> -->
+
+    <div class="divider">OR</div>
+
+    <div class="login-footer">
+      <a href="resetPassword.html">
+        <i class="fas fa-key"></i> Recover Password
+      </a>
+      <a href="register.html">
+        <i class="fas fa-user-plus"></i> Register Account
+      </a>
+      <a href="adminLogin.html">
+        <i class="fas fa-user-shield"></i> Admin Access
+      </a>
+    </div>
+  </div>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>

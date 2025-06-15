@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Attendance App - Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #5e60ce;
+      --primary-glow: #5e60ce80;
+      --secondary: #4ea8de;
+      --accent: #f72585;
+      --dark: #0a0a23;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --light: #e0e0e0;
+      --success: #00f5d4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh; /* Changed from height to min-height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0a0a23, #1a1a3a, #2a2a4a);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      padding: 1rem; /* Added padding for smaller screens */
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .register-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 25px;
+      box-shadow: 0 0 40px rgba(94, 96, 206, 0.2);
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      animation: float 6s ease-in-out infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .register-container:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 60px rgba(94, 96, 206, 0.3);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .register-header {
+      text-align: center;
+      margin-bottom: 2.8rem;
+    }
+
+    .register-header h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), var(--success));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .register-header p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .form-group label {
+      color: var(--light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      display: block;
+      letter-spacing: 1px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--secondary);
+      font-size: 1.2rem;
+      z-index: 1;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 1rem 1rem 1rem 50px;
+      border: none;
+      border-radius: 15px;
+      background: rgba(10, 10, 35, 0.5);
+      color: var(--light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234ea8de' viewBox='0 0 16 16'%3E%3Cpath d='M8 12l-6-6h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 12px;
+      cursor: pointer;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      box-shadow: 0 0 20px var(--primary-glow);
+      background: rgba(10, 10, 35, 0.7);
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 1px;
+    }
+
+    .input-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 25px var(--primary-glow);
+      opacity: 0;
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .form-group input:focus + .input-glow,
+    .form-group select:focus + .input-glow {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px var(--primary-glow);
+      transition: all 0.4s ease;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px var(--primary-glow);
+      background: linear-gradient(45deg, var(--secondary), var(--success));
+    }
+
+    .register-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: 0.6s;
+    }
+
+    .register-btn:hover::before {
+      left: 100%;
+    }
+
+    .register-btn i {
+      transition: transform 0.4s ease;
+    }
+
+    .register-btn:hover i {
+      transform: translateX(8px);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem; /* Added to ensure spacing at the bottom */
+    }
+
+    .login-link a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .login-link a:hover {
+      color: var(--success);
+      transform: translateX(5px);
+    }
+
+    .login-link a i {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 480px) {
+      .register-container {
+        padding: 2rem;
+        margin: 0 1.5rem;
+      }
+
+      .register-header h2 {
+        font-size: 2rem;
+      }
+
+      .register-btn {
+        padding: 1rem;
+        font-size: 1rem;
+      }
+
+      .form-group input,
+      .form-group select {
+        padding: 0.8rem 0.8rem 0.8rem 45px;
+        font-size: 0.9rem;
+      }
+
+      .input-icon {
+        font-size: 1rem;
+      }
+    }
+    .main-contant{
+            display: none;
+           
+            justify-content: center;
+        }
+  </style>
+</head>
+<body>
+
+
+    <div  id="spinner"   class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+
+
+      <div id="content" class="main-contant">
+
+
+          <div class="register-container">
+              <div class="register-header">
+                  <h2>Create Account</h2>
+                  <p>Join the SMIT Student Portal</p>
+                </div>
+                
+    <!-- <form> -->
+      <div class="form-group">
+          <label for="username">Username</label>
+        <div class="input-wrapper">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required aria-label="Username">
+          <div class="input-glow"></div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+          <label for="smit-branch">Select SMIT Karachi Branch</label>
+          <div class="input-wrapper">
+              <i class="fas fa-building input-icon"></i>
+          <select id="smit-branch" name="smit-branch" required aria-label="Select SMIT Karachi Branch">
+            <option value="" disabled selected>Select a branch</option>
+            <option value="bahadurabad">Bahadurabad Campus (Head Office)</option>
+            <option value="nazimabad">Nazimabad Campus</option>
+            <option value="north-karachi">North Karachi Campus</option>
+            <option value="numaish">Numaish Campus</option>
+            <option value="paposh">Paposh Campus</option>
+            <option value="zaitoon-gulshan">Zaitoon Ashraf IT Park (Gulshan Campus)</option>
+        </select>
+          <div class="input-glow"></div>
+        </div>
+    </div>
+    
+      <div class="form-group">
+        <label for="photoURL">Photo URL</label>
+        <div class="input-wrapper">
+          <i class="fas fa-image input-icon"></i>
+          <input type="url" id="photoURL" name="photoURL" placeholder="Enter your photo URL" required aria-label="Photo URL">
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="rollNumber">Roll Number</label>
+        <div class="input-wrapper">
+            <i class="fas fa-id-card input-icon"></i>
+            <input type="number" id="rollNumber" name="roll-number" placeholder="Enter your roll number" required aria-label="Roll Number">
+            <div class="input-glow"></div>
+        </div>
+    </div>
+    
+      <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+              <i class="fas fa-envelope input-icon"></i>
+              <input type="email" id="email" name="email" placeholder="Enter your email" required aria-label="Email">
+          <div class="input-glow"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required aria-label="Password">
+          <div class="input-glow"></div>
+        </div>
+    </div>
+    
+    <button type="submit" id="register-Btn" class="register-btn">
+        <span>Register</span>
+        <i class="fas fa-arrow-right"></i>
+    </button>
+    <!-- </form> -->
+
+    <div class="login-link">
+      <a href="index.html">
+        <i class="fas fa-sign-in-alt"></i> Already have an account? Login
+      </a>
+      <a href="adminLogin.html">
+        <i class="fas fa-user-shield"></i> Admin Access
+      </a>
+    </div>
+  </div>
+</div>
+  
+  <script  src="register.js"  type="module"></script>
+</body>
+</html>

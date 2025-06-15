@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ID Card - Front & Back</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 40px;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .id-card {
+      width: 350px;
+      height: 530px;
+      background: #f7f9fc;
+      border-radius: 16px;
+      box-shadow: 0 14px 45px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+      border: 3px solid #004aad;
+    }
+
+    .id-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 160px;
+      background: url('https://www.transparenttextures.com/patterns/diagmonds-light.png'), linear-gradient(to right, #004aad, #78c800);
+      background-blend-mode: overlay;
+      z-index: 0;
+    }
+
+    .id-card-header {
+      position: relative;
+      z-index: 1;
+      padding: 15px 10px 5px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    .id-card-logo {
+      position: relative;
+      z-index: 1;
+      margin-top: 5px;
+    }
+
+    .id-card-logo img {
+      width: 110px;
+    }
+
+    .id-card-photo {
+      position: relative;
+      z-index: 2;
+      margin-top: -20px;
+    }
+
+    .id-card-photo img {
+      width: 100px;
+      height: 110px;
+      object-fit: cover;
+      border: 5px solid #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .id-card-details {
+      margin-top: 15px;
+      padding: 0 20px;
+    }
+
+    .id-card-details h2 {
+      font-size: 20px;
+      margin: 12px 0 6px;
+      color: #004aad;
+    }
+
+    .id-card-details p {
+      font-size: 14px;
+      margin: 5px 0;
+      color: #222;
+    }
+
+    .decor-line {
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(to right, #78c800, #004aad);
+      margin: 12px auto;
+      border-radius: 2px;
+    }
+
+    .id-card-footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      background: #004aad;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 3px solid #78c800;
+    }
+
+    .barcode {
+      margin-top: 20px;
+    }
+
+    .barcode img {
+      width: 130px;
+    }
+
+    .back-side {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 30px 20px;
+      color: #004aad;
+    }
+
+    .back-side h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .back-side p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    .contact-box {
+      border: 2px dashed #004aad;
+      padding: 15px;
+      width: 90%;
+      border-radius: 10px;
+      background: #eef5ff;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- FRONT SIDE -->
+  <div class="id-card">
+    <div class="id-card-header">
+      SAYLANI MASS IT TRAINING PROGRAM
+    </div>
+    <div class="id-card-logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Saylani_Welfare_Logo.png/600px-Saylani_Welfare_Logo.png" alt="SMIT Logo">
+    </div>
+    <div class="id-card-photo" id="id-card-photo">
+      <img src="" alt="Name ??" />
+    </div>
+    <div class="id-card-details">
+      <h2   id="fullName"></h2>
+      <p>Web and Mobile App Development</p>
+      <p id="AcademicYear"></p>
+      <p id="BranchName"></p>
+      <div class="decor-line"></div>
+      <p id="RollNumber"><strong>ID:</strong></p>
+    </div>
+    <div class="barcode">
+      <img src="https://barcode.tec-it.com/barcode.ashx?data=WMA-345208&code=Code128&translate-esc=true" />
+    </div>
+    <div class="id-card-footer">
+      Karachi, Pakistan
+    </div>
+  </div>
+
+  <!-- BACK SIDE -->
+   
+  <div class="id-card">
+    <div class="back-side">
+      <h3>Instructions:</h3>
+      <p>• This ID card must be worn at all times inside campus.</p>
+      <p>• Tampering with the card is strictly prohibited.</p>
+      <p>• Return the card if found.</p>
+
+      <div class="contact-box">
+        <h3>Contact Info</h3>
+        <p id="email"><strong>Email:</strong> ayanh7455@gmail.com</p>
+        <p id="Branch"></p>
+        <p id="backRollNumber"><strong>Emergency Contact:</strong> +92-300-0000000</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="idCard.js"></script>
+</body>
+</html>
