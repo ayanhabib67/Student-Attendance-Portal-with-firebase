@@ -47,7 +47,8 @@ const user = localStorage.getItem("isLoggedIn");
   let branchName = document.getElementById("branchName");
 
 
-
+  // let spinner = document.getElementById("spinner")
+  // let content = document.getElementById("content")
   let getRollLocaData = async (user) => {
 
     let collectionRef = collection(db, user.uid);
@@ -58,7 +59,8 @@ const user = localStorage.getItem("isLoggedIn");
       snapshot.forEach((doc) => {
         console.log(doc.data());
 
-       
+        // spinner.style.display="none"
+        // content.style.display="block"
         let data = doc.data();
 
         rollNumber.innerHTML = `Roll Number ${data.rollNumber}`;
