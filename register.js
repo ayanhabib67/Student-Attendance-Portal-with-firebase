@@ -1,8 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, onSnapshot, auth,collection,addDoc, db,  updateProfile, onAuthStateChanged,} from "./firebase.js";
 
 
-let spinner = document.getElementById("spinner")
-let content = document.getElementById("content")
 
 
 onAuthStateChanged(auth, (user) => {
@@ -10,8 +8,7 @@ onAuthStateChanged(auth, (user) => {
     const uid = user.uid;
 
     console.log(uid);
- spinner.style.display="none"
-        content.style.display="block"
+
 
     branchName(user)
       .then(() => {
